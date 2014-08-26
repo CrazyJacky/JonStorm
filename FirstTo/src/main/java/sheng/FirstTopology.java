@@ -29,7 +29,8 @@ public class FirstTopology {
   public StormTopology build() {
     TopologyBuilder builder = new TopologyBuilder();
     builder.setSpout("in", new KafkaSpout(buildKafkaSpoutConfig()));
-    builder.setBolt("out", new PrintBolt()).shuffleGrouping("in");
+    builder.setBolt("out", new PrintBolt()).shuffleGrouping("in");                 // Printing every messages to worker's log file
+    builder.setBolt("count", new CountSumPBolt()).shuffleGrouping("in");           // Counting messages and print every 5 messages
     return builder.createTopology();
   }
 
