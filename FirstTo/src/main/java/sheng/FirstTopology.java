@@ -24,7 +24,7 @@ public class FirstTopology {
 
   public SpoutConfig buildKafkaSpoutConfig() {
 //    ZkHosts zkHosts = new ZkHosts("ec2-54-191-68-82.us-west-2.compute.amazonaws.com");
-    GlobalPartitionInformation globalPartitionInformation = new GlobalPartitionInformation();       // Using static host to prevent refreshing message from Zookeeper manager
+    GlobalPartitionInformation globalPartitionInformation = new GlobalPartitionInformation();       // Using static host to prevent refreshing message from Zookeeper manager  WFT?!
     globalPartitionInformation.addPartition(0, new Broker("ec2-54-191-68-82.us-west-2.compute.amazonaws.com", 9092));
     BrokerHosts brokerHosts = new StaticHosts(globalPartitionInformation);
     SpoutConfig config = new SpoutConfig(brokerHosts, "firstT", "", "0");
