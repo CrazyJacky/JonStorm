@@ -7,10 +7,13 @@ import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.spout.SchemeAsMultiScheme;
 import backtype.storm.topology.TopologyBuilder;
+import storm.kafka.Broker;
+import storm.kafka.BrokerHosts;
 import storm.kafka.KafkaSpout;
 import storm.kafka.SpoutConfig;
+import storm.kafka.StaticHosts;
 import storm.kafka.StringScheme;
-import storm.kafka.ZkHosts;
+import storm.kafka.trident.GlobalPartitionInformation;
 
 
 /**
@@ -20,8 +23,11 @@ public class FirstTopology {
 //  private static Logger _logger = LoggerFactory.getLogger(FirstTopology.class);
 
   public SpoutConfig buildKafkaSpoutConfig() {
-    ZkHosts zkHosts = new ZkHosts("ec2-54-191-68-82.us-west-2.compute.amazonaws.com");
-    SpoutConfig config = new SpoutConfig(zkHosts, "firstT", "", "0");
+//    ZkHosts zkHosts = new ZkHosts("ec2-54-191-68-82.us-west-2.compute.amazonaws.com");
+    GlobalPartitionInformation globalPartitionInformation = new GlobalPartitionInformation();       // Using static host to prevent refreshing message from Zookeeper manager
+    globalPartitionInformation.addPartition(0, new Broker("ec2-54-191-68-82.us-west-2.compute.amazonaws.com", 9092));
+    BrokerHosts brokerHosts = new StaticHosts(globalPartitionInformation);
+    SpoutConfig config = new SpoutConfig(brokerHosts, "firstT", "", "0");
     config.scheme = new SchemeAsMultiScheme(new StringScheme());
     return config;
   }
