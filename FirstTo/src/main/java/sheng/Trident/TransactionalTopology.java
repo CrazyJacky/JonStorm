@@ -2,7 +2,6 @@ package sheng.Trident;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
-import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
@@ -35,7 +34,7 @@ public class TransactionalTopology {
     builder.newStream("in", kafkaSpoutBuilder(topic))
         .aggregate(new Count(), new Fields("TotalCnt"))
         .each(new Fields("TotalCnt"), new ZeroFilter("TotalCnt"))
-        .each(new Fields("TotalCnt"), new PrintSumFunction("TotalCnt"), new Fields("Cnt"))
+        .each(new Fields("TotalCnt"), new Sum2DBFunction("TotalCnt"), new Fields("Cnt"))
     ;
 
     return builder.build();
@@ -47,7 +46,8 @@ public class TransactionalTopology {
     Config stormConfig = new Config();
     StormTopology stormTopology = topology.buildTopology("joowoo");
     LocalCluster localCluster = new LocalCluster();
-    StormSubmitter.submitTopology("Hello", stormConfig, stormTopology);
+//    StormSubmitter.submitTopology("Hello", stormConfig, stormTopology);
+    localCluster.submitTopology("Hello", stormConfig, stormTopology);
   }
 
 }
