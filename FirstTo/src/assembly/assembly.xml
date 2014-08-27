@@ -13,10 +13,12 @@
       <unpack>true</unpack>
       <scope>runtime</scope>
       <excludes>
+        <exclude>org.apache.storm:storm-core</exclude>
+        <exclude>org.apache.zookeeper:zookeeper</exclude>
         <exclude>org.clojure:clojure</exclude>
         <exclude>clj-time:clj-time</exclude>
         <exclude>compojure:compojure</exclude>
-        <exclude>hiccup:hiccup</exclude>
+        <exclude>hiccup:*</exclude>
         <exclude>ring:ring-devel</exclude>
         <exclude>ring:ring-jetty-adapter</exclude>
         <exclude>org.clojure:tools.logging</exclude>
