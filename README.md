@@ -26,3 +26,4 @@
 `bin/kafka-console-producer.sh --broker-list  ec2-54-191-68-82.us-west-2.compute.amazonaws.com:9092 --topic firstT`
 
 Sheng
+ 
