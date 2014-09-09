@@ -2,7 +2,6 @@ package sheng;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
-import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.generated.StormTopology;
@@ -40,8 +39,9 @@ public class FirstTopology {
     FirstTopology firstTopology = new FirstTopology();
     Config config = new Config();
 //    config.put(Config.TOPOLOGY_TRIDENT_BATCH_EMIT_INTERVAL_MILLIS, 2000);
+    config.put(Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS, 3);
     StormTopology build = firstTopology.build(args[0]);
     LocalCluster localCluster = new LocalCluster();
-    StormSubmitter.submitTopology("Hello JooWoo", config, build);
+    localCluster.submitTopology("Hello JooWoo", config, build);
   }
 }

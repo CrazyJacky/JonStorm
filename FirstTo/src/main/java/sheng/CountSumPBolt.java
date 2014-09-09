@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class CountSumPBolt extends BaseRichBolt {
   private long _totalSum;
   private static final Logger _LOG = LoggerFactory.getLogger(CountSumPBolt.class);
-
+  private OutputCollector _outputCollector;
 
   /**
    * Called when a task for this component is initialized within a worker on the cluster.
@@ -30,7 +30,7 @@ public class CountSumPBolt extends BaseRichBolt {
    */
   @Override
   public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
-
+    _outputCollector = collector;
   }
 
   /**
@@ -57,6 +57,7 @@ public class CountSumPBolt extends BaseRichBolt {
     if (_totalSum % 5 == 0) {
       _LOG.info("Total Count: " + _totalSum);
     }
+    _outputCollector.ack(input);
   }
 
   /**
